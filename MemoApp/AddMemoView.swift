@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct AddMemoView: View {
+    @State private var isEditingMemoTextField = false
     @State private var memoTextField = ""
     @Binding var showSheet: Bool
     
     // 追加ボタンのグラデーションの定義
     let addMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
+    // 構造体の初期化
+    init(showSheet: Binding<Bool>) {
+        self._showSheet = showSheet
+        // TextEditorの背景色を透過させる
+        UITextView.appearance().backgroundColor = .clear
+    }
     
     var body: some View {
         VStack(alignment: .leading){
@@ -20,11 +27,12 @@ struct AddMemoView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(10)
-            
-            TextField("", text: $memoTextField)
-            
-            Spacer()
-
+            // メモ入力欄
+            TextEditor(text: $memoTextField)
+                .frame(height: isEditingMemoTextField ? 100 : nil)
+                .onTapGesture {
+                    isEditingMemoTextField = true
+                }
             // 区切り線
             Divider()
                 .padding()
@@ -51,12 +59,27 @@ struct AddMemoView: View {
             .padding(.bottom, 30)
             .onTapGesture {
                 //　メモ登録コードを記載
-                print("tapped")
                 showSheet.toggle()
             }
+            // メモ入力中のレイアウト調整
+            if isEditingMemoTextField {
+                Spacer()
+            }
         }
-        .background(Color.secondary)
+        .background(Color.secondary.opacity(0.3))
         .edgesIgnoringSafeArea(.all)
+        .onTapGesture {
+            // キーボードを閉じる
+            UIApplication.shared.closeKeyboard()
+            isEditingMemoTextField = false
+        }
+    }
+}
+
+extension UIApplication {
+    // キーボードを閉じる
+    func closeKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 

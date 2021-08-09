@@ -37,7 +37,7 @@ struct ContentView: View {
                     ZStack {
                         Spacer()
                             .frame(maxWidth: .infinity)
-                            .background(Color.secondary)
+                            .background(Color.secondary.opacity(0.3))
                             .edgesIgnoringSafeArea(.all)
                         Text("なし")
                             .font(.title)
