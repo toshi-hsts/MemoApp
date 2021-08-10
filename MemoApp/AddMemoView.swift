@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AddMemoView: View {
-    @State private var isEditingMemoTextField = false
     @State private var memoTextField = ""
     @Binding var showSheet: Bool
     
@@ -29,10 +28,6 @@ struct AddMemoView: View {
                 .padding(10)
             // メモ入力欄
             TextEditor(text: $memoTextField)
-                .frame(height: isEditingMemoTextField ? 100 : nil)
-                .onTapGesture {
-                    isEditingMemoTextField = true
-                }
             // 区切り線
             Divider()
                 .padding()
@@ -61,17 +56,12 @@ struct AddMemoView: View {
                 //　メモ登録コードを記載
                 showSheet.toggle()
             }
-            // メモ入力中のレイアウト調整
-            if isEditingMemoTextField {
-                Spacer()
-            }
         }
         .background(Color.secondary.opacity(0.3))
         .edgesIgnoringSafeArea(.all)
         .onTapGesture {
             // キーボードを閉じる
             UIApplication.shared.closeKeyboard()
-            isEditingMemoTextField = false
         }
     }
 }
