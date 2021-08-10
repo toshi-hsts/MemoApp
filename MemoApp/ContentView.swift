@@ -45,13 +45,18 @@ struct ContentView: View {
                     }
                     //　メモがあるときの画面表示
                 } else {
-                    List(0 ..< memoArray.count) { index in
-                        VStack(alignment: .leading){
-                            Text(memoArray[index])
-                                .font(.headline)
-                                .padding(.vertical, 5)
-                            Text("日付")
-                                .font(.subheadline)
+                    ScrollView(.vertical) {
+                        LazyVStack(alignment: .leading) {
+                            ForEach(0 ..< memoArray.count, id: \.self) {
+                                Text(memoArray[$0])
+                                    .font(.headline)
+                                    .padding(.horizontal, 5)
+                                Text("日付")
+                                    .font(.subheadline)
+                                    .padding(.horizontal, 5)
+                                // 区切り線
+                                Divider()
+                            }
                         }
                     }
                 }
