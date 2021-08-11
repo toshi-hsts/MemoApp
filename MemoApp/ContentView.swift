@@ -78,7 +78,7 @@ struct ContentView: View {
         }
         // シート表示
         .sheet(isPresented: $showSheet) {
-            AddMemoView(showSheet: $showSheet)
+            AddMemoView()
         }
     }
     

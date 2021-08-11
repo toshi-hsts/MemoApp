@@ -9,13 +9,12 @@ import SwiftUI
 
 struct AddMemoView: View {
     @State private var memoTextField = ""
-    @Binding var showSheet: Bool
+    @Environment(\.presentationMode) var presentationMode
     
     // 追加ボタンのグラデーションの定義
     let addMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
     // 構造体の初期化
-    init(showSheet: Binding<Bool>) {
-        self._showSheet = showSheet
+    init() {
         // TextEditorの背景色を透過させる
         UITextView.appearance().backgroundColor = .clear
     }
@@ -54,7 +53,9 @@ struct AddMemoView: View {
             .padding(.bottom, 30)
             .onTapGesture {
                 //　メモ登録コードを記載
-                showSheet.toggle()
+                
+                // シートを閉じる
+                presentationMode.wrappedValue.dismiss()
             }
         }
         .background(Color.secondary.opacity(0.3))
@@ -75,6 +76,6 @@ extension UIApplication {
 
 struct AddMemoView_Previews: PreviewProvider {
     static var previews: some View {
-        AddMemoView(showSheet: Binding.constant(true))
+        AddMemoView()
     }
 }
