@@ -8,7 +8,7 @@
 import SwiftUI
 //import CoreData
 
-struct ContentView: View {
+struct HomeView: View {
     //    @Environment(\.managedObjectContext) private var viewContext
     //
     //    @FetchRequest(
@@ -123,7 +123,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()        
+        HomeView()        
         //        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
