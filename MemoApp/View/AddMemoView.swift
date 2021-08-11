@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AddMemoView: View {
-    @State private var memoTextField = ""
+    @State private var memoTextEditor = ""
+    @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
     // 追加ボタンのグラデーションの定義
@@ -26,7 +28,7 @@ struct AddMemoView: View {
                 .fontWeight(.bold)
                 .padding(10)
             // メモ入力欄
-            TextEditor(text: $memoTextField)
+            TextEditor(text: $memoTextEditor)
             // 区切り線
             Divider()
                 .padding()
@@ -52,8 +54,8 @@ struct AddMemoView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.bottom, 30)
             .onTapGesture {
-                //　メモ登録コードを記載
-                
+                //　メモ登録
+                addMemo()
                 // シートを閉じる
                 presentationMode.wrappedValue.dismiss()
             }
@@ -63,6 +65,22 @@ struct AddMemoView: View {
         .onTapGesture {
             // キーボードを閉じる
             UIApplication.shared.closeKeyboard()
+        }
+    }
+    
+    // メモを追加する
+    func addMemo(){
+        withAnimation {
+            let newMemo = Memo(context: viewContext)
+            newMemo.content = memoTextEditor
+            newMemo.date = Date()
+            
+            do {
+                try viewContext.save()
+            } catch {
+                let nsError = error as NSError
+                fatalError("エラー： \(nsError), \(nsError.userInfo)")
+            }
         }
     }
 }

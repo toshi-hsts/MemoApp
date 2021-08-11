@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct MemoAppApp: App {
-//    let persistenceController = PersistenceController.shared
+    // NSPersistentContainerの初期化
+    let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
             HomeView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                // 環境変数にNSManagedObjectContextを登録
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

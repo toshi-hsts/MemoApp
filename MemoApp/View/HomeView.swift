@@ -6,25 +6,31 @@
 //
 
 import SwiftUI
-//import CoreData
+import CoreData
 
 struct HomeView: View {
-    //    @Environment(\.managedObjectContext) private var viewContext
-    //
-    //    @FetchRequest(
-    //        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-    //        animation: .default)
-    //    private var items: FetchedResults<Item>
-    
-    // CoreData実装までの仮データ
-    @State private var memoArray = ["明日も頑張ろう！明日も頑張ろう！明日も頑張ろう！明日も頑張ろう！","明後日も頑張ろう！明後日も頑張ろう！明後日も頑張ろう！","明明後日も頑張ろう！明明後日も頑張ろう！明明後日も頑張ろう！"]
-    
+    // managedObjectContextをviewContextとして定義
+    @Environment(\.managedObjectContext) private var viewContext
+    // memoデータを取得
+    @FetchRequest(
+        entity: Memo.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Memo.date, ascending: true)],
+        animation: .default)
+    private var memos: FetchedResults<Memo>
     // シート表示管理
     @State private var showSheet = false
-    
     // プラスボタンのグラデーションの定義
     let plusButtonGradation =  AngularGradient(gradient: Gradient(colors: [.green, .blue, .green]), center: .center, angle: .degrees(-45))
-
+    // 日付を指定書式に変換する
+    let itemFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
+        formatter.dateFormat = "yyyy年MM月d日(EEEEE)"
+        return formatter
+    }()
+    
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             VStack(alignment: .leading) {
@@ -33,7 +39,7 @@ struct HomeView: View {
                     .fontWeight(.bold)
                     .padding(.leading, 10)
                 //　メモがないときの画面表示
-                if memoArray.isEmpty {
+                if memos.isEmpty {
                     ZStack {
                         Spacer()
                             .frame(maxWidth: .infinity)
@@ -47,11 +53,11 @@ struct HomeView: View {
                 } else {
                     ScrollView(.vertical) {
                         LazyVStack(alignment: .leading) {
-                            ForEach(0 ..< memoArray.count, id: \.self) {
-                                Text(memoArray[$0])
+                            ForEach(memos) { memo in
+                                Text(memo.content!)
                                     .font(.headline)
                                     .padding(.horizontal, 5)
-                                Text("日付")
+                                Text(itemFormatter.string(from: memo.date!))
                                     .font(.subheadline)
                                     .padding(.horizontal, 5)
                                 // 区切り線
@@ -81,49 +87,11 @@ struct HomeView: View {
             AddMemoView()
         }
     }
-    
-    //    private func addItem() {
-    //        withAnimation {
-    //            let newItem = Item(context: viewContext)
-    //            newItem.timestamp = Date()
-    //
-    //            do {
-    //                try viewContext.save()
-    //            } catch {
-    //                // Replace this implementation with code to handle the error appropriately.
-    //                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-    //                let nsError = error as NSError
-    //                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-    //            }
-    //        }
-    //    }
-    
-    //    private func deleteItems(offsets: IndexSet) {
-    //        withAnimation {
-    //            offsets.map { items[$0] }.forEach(viewContext.delete)
-    //
-    //            do {
-    //                try viewContext.save()
-    //            } catch {
-    //                // Replace this implementation with code to handle the error appropriately.
-    //                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-    //                let nsError = error as NSError
-    //                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-    //            }
-    //        }
-    //    }
 }
-
-//private let itemFormatter: DateFormatter = {
-//    let formatter = DateFormatter()
-//    formatter.dateStyle = .short
-//    formatter.timeStyle = .medium
-//    return formatter
-//}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()        
-        //        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        HomeView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
