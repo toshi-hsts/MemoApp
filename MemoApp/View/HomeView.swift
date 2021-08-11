@@ -11,12 +11,6 @@ import CoreData
 struct HomeView: View {
     // managedObjectContextをviewContextとして定義
     @Environment(\.managedObjectContext) private var viewContext
-    // memoデータを取得
-    @FetchRequest(
-        entity: Memo.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Memo.date, ascending: true)],
-        animation: .default)
-    private var memos: FetchedResults<Memo>
     // シート表示管理
     @State private var showSheet = false
     // プラスボタンのグラデーションの定義
@@ -30,6 +24,8 @@ struct HomeView: View {
         formatter.dateFormat = "yyyy年MM月d日(EEEEE)"
         return formatter
     }()
+    // HomeViewModelのインスタンス生成
+    @ObservedObject private var homeViewModel = HomeViewModel()
     
     var body: some View {
         ZStack(alignment: .bottomTrailing){
@@ -39,7 +35,7 @@ struct HomeView: View {
                     .fontWeight(.bold)
                     .padding(.leading, 10)
                 //　メモがないときの画面表示
-                if memos.isEmpty {
+                if homeViewModel.memos.isEmpty {
                     ZStack {
                         Spacer()
                             .frame(maxWidth: .infinity)
@@ -53,7 +49,7 @@ struct HomeView: View {
                 } else {
                     ScrollView(.vertical) {
                         LazyVStack(alignment: .leading) {
-                            ForEach(memos) { memo in
+                            ForEach(homeViewModel.memos) { memo in
                                 Text(memo.content!)
                                     .font(.headline)
                                     .padding(.horizontal, 5)
@@ -84,7 +80,11 @@ struct HomeView: View {
         }
         // シート表示
         .sheet(isPresented: $showSheet) {
-            AddMemoView()
+            AddMemoView(homeViewModel: homeViewModel)
+        }
+        // メモをCoreDataから読み込む
+        .onAppear{
+            homeViewModel.loadMemos(viewContext: viewContext)
         }
     }
 }

@@ -14,13 +14,15 @@ struct AddMemoView: View {
     @Environment(\.presentationMode) var presentationMode
     
     // HomeViewModelインスタンスを定義
-    let homeViewModel = HomeViewModel()
+    private let homeViewModel: HomeViewModel
     // 追加ボタンのグラデーションの定義
     let addMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
     // 構造体の初期化
-    init() {
+    init(homeViewModel: HomeViewModel) {
         // TextEditorの背景色を透過させる
         UITextView.appearance().backgroundColor = .clear
+        // 親ViewのviewModel参照を受け取る
+        self.homeViewModel = homeViewModel
     }
     
     var body: some View {
@@ -80,6 +82,6 @@ extension UIApplication {
 
 struct AddMemoView_Previews: PreviewProvider {
     static var previews: some View {
-        AddMemoView()
+        AddMemoView(homeViewModel: HomeViewModel())
     }
 }
