@@ -13,6 +13,8 @@ struct AddMemoView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
+    // HomeViewModelインスタンスを定義
+    let homeViewModel = HomeViewModel()
     // 追加ボタンのグラデーションの定義
     let addMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
     // 構造体の初期化
@@ -55,7 +57,7 @@ struct AddMemoView: View {
             .padding(.bottom, 30)
             .onTapGesture {
                 //　メモ登録
-                addMemo()
+                homeViewModel.addMemo(viewContext: viewContext, content: memoTextEditor)
                 // シートを閉じる
                 presentationMode.wrappedValue.dismiss()
             }
@@ -65,22 +67,6 @@ struct AddMemoView: View {
         .onTapGesture {
             // キーボードを閉じる
             UIApplication.shared.closeKeyboard()
-        }
-    }
-    
-    // メモを追加する
-    func addMemo(){
-        withAnimation {
-            let newMemo = Memo(context: viewContext)
-            newMemo.content = memoTextEditor
-            newMemo.date = Date()
-            
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                fatalError("エラー： \(nsError), \(nsError.userInfo)")
-            }
         }
     }
 }
