@@ -46,23 +46,24 @@ struct AddMemoView: View {
                 .frame(maxWidth:.infinity, alignment: .center)
                 .padding()
             // 追加ボタン
-            ZStack{
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(addMemoButtonGradation)
-                    .frame(height: 50)
-                    .padding()
-                Text("+ 追加")
-                    .font(.title2)
-                    .foregroundColor(.white)
-            }
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.bottom, 30)
-            .onTapGesture {
+            Button(action: {
                 //　メモ登録
                 homeViewModel.addMemo(viewContext: viewContext, content: memoTextEditor)
                 // シートを閉じる
                 presentationMode.wrappedValue.dismiss()
+            }) {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(addMemoButtonGradation)
+                        .frame(height: 50)
+                        .padding()
+                    Text("+  追加")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                }
             }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.bottom, 30)
         }
         .background(Color.secondary.opacity(0.3))
         .edgesIgnoringSafeArea(.all)
