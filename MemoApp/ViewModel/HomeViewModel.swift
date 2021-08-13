@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 class HomeViewModel: ObservableObject {
-    @Published var memos: [Memo] = []
+    @Published var memos: [MemoModel] = []
     // メモを追加する
     func addMemo(viewContext : NSManagedObjectContext, content: String){
         let newMemo = Memo(context: viewContext)
@@ -33,7 +33,10 @@ class HomeViewModel: ObservableObject {
         request.sortDescriptors = [sortDescriptor]
         
         do {
-            memos = try viewContext.fetch(request) as! [Memo]
+            let fetchedMemos = try viewContext.fetch(request) as! [Memo]
+            fetchedMemos.forEach{
+                memos.append(MemoModel(isSelected: false, memo: $0))
+            }
         }
         catch {
             let nsError = error as NSError
