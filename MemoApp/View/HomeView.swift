@@ -42,6 +42,10 @@ struct HomeView: View {
                         Spacer()
                         Button(action: {
                             isSelectingDeleteMemo.toggle()
+                            // チェックボックスの入力をリセットする
+                            if isSelectingDeleteMemo == false {
+                                homeViewModel.resetSelectedPropery()
+                            }
                         }) {
                             Image(systemName: isSelectingDeleteMemo ? "clear" : "trash")
                                 .foregroundColor(.black)

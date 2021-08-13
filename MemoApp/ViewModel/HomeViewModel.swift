@@ -42,5 +42,11 @@ class HomeViewModel: ObservableObject {
             let nsError = error as NSError
             fatalError("エラー： \(nsError), \(nsError.userInfo)")
         }
+    }    
+    // isSelectedプロパティをfalseにする
+    func resetSelectedPropery(){
+        for i in 0 ..< memos.count {
+            memos[i].isSelected = false
+        }
     }
 }
