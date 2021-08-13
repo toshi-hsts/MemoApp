@@ -30,7 +30,7 @@ struct HomeView: View {
     @ObservedObject private var homeViewModel = HomeViewModel()
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing){
+        ZStack(alignment: .bottom) {
             VStack(alignment: .leading) {
                 HStack {
                     Text("メモの一覧")
@@ -67,14 +67,35 @@ struct HomeView: View {
                         LazyVStack(alignment: .leading) {
                             ForEach(0 ..< homeViewModel.memos.count) { i in
                                 VStack(alignment: .leading){
-                                    Text(homeViewModel.memos[i].content!)
-                                        .font(.headline)
-                                        .padding(.horizontal, 5)
-                                    Text(itemFormatter.string(from: homeViewModel.memos[i].date!))
-                                        .font(.subheadline)
-                                        .padding(.horizontal, 5)
+                                    HStack{
+                                        // 削除メモ選択中は、チェックボタンを表示する
+                                        if isSelectingDeleteMemo {
+                                            Button(action: {
+                                                homeViewModel.memos[i].isSelected.toggle()
+                                            }) {
+                                                Image(systemName: homeViewModel.memos[i].isSelected ? "checkmark.square.fill" : "square")
+                                                    .padding(.leading, 10)
+                                            }
+                                        }
+                                        // メモの内容と日付を表示
+                                        VStack(alignment: .leading){
+                                            Text(homeViewModel.memos[i].memo.content!)
+                                                .font(.headline)
+                                                .padding(.horizontal, 5)
+                                            Text(itemFormatter.string(from: homeViewModel.memos[i].memo.date!))
+                                                .font(.subheadline)
+                                                .padding(.horizontal, 5)
+                                        }
+                                    }
                                     // 区切り線
                                     Divider()
+                                }
+                                // 行（セル）がタップされたときの処理
+                                .contentShape(Rectangle())
+                                .onTapGesture{
+                                    if isSelectingDeleteMemo{
+                                        homeViewModel.memos[i].isSelected.toggle()
+                                    }
                                 }
                             }
                         }
@@ -86,14 +107,15 @@ struct HomeView: View {
                     Button(action: {
                         //　メモ削除
                         homeViewModel.deleteMemo(viewContext: viewContext)
-                        
+                        // 削除メモ選択状態を終了する
+                        isSelectingDeleteMemo.toggle()
                     }) {
                         ZStack{
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color.red)
                                 .frame(height: 50)
                                 .padding()
-                            Text("削除")
+                            Text("選択したメモを削除")
                                 .font(.title2)
                                 .foregroundColor(.white)
                         }
@@ -101,22 +123,23 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.bottom, 30)
                 }
-                // 削除メモ選択中でなければ、メモ登録シートを表示する
-                else {
-                    Button(action: {
-                        showSheet.toggle()
-                    }) {
-                        ZStack{
-                            Circle()
-                                .fill(plusButtonGradation)
-                                .frame(width: 70, height: 70, alignment: .center)
-                            Text("＋")
-                                .font(.largeTitle)
-                                .foregroundColor(.white)
-                        }
-                        .offset(x: -30.0, y: -30.0)
+            }
+            // 削除メモ選択中でなければ、メモ追加ボタンを表示する
+            if isSelectingDeleteMemo == false {
+                Button(action: {
+                    showSheet.toggle()
+                }) {
+                    ZStack{
+                        Circle()
+                            .fill(plusButtonGradation)
+                            .frame(width: 70, height: 70, alignment: .center)
+                        Text("＋")
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing, 30)
             }
         }
         // シート表示

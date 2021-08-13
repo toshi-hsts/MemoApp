@@ -62,14 +62,14 @@
 		CA0601B126BD0CE600CED8A7 /* MemoApp */ = {
 			isa = PBXGroup;
 			children = (
-				CA2B019D26C409680021E785 /* ViewModel */,
 				CA2B019B26C409320021E785 /* View */,
-				CA0601B626BD0CE900CED8A7 /* Assets.xcassets */,
+				CA2B019D26C409680021E785 /* ViewModel */,
 				CA20852726C667DC008FDB9F /* Model */,
 				CA0601B226BD0CE600CED8A7 /* MemoAppApp.swift */,
 				CA0601BB26BD0CE900CED8A7 /* Persistence.swift */,
 				CA0601C026BD0CEA00CED8A7 /* Info.plist */,
 				CA0601BD26BD0CEA00CED8A7 /* MemoApp.xcdatamodeld */,
+				CA0601B626BD0CE900CED8A7 /* Assets.xcassets */,
 				CA0601B826BD0CE900CED8A7 /* Preview Content */,
 			);
 			path = MemoApp;
