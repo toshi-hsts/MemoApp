@@ -34,6 +34,9 @@ class HomeViewModel: ObservableObject {
         
         do {
             let fetchedMemos = try viewContext.fetch(request) as! [Memo]
+            // メモ配列を初期化
+            memos = []
+            // CoreDataのメモをPublished変数に読み込む
             fetchedMemos.forEach{
                 memos.append(MemoModel(isSelected: false, memo: $0))
             }
@@ -47,6 +50,22 @@ class HomeViewModel: ObservableObject {
     func resetSelectedPropery(){
         for i in 0 ..< memos.count {
             memos[i].isSelected = false
+        }
+    }
+    // メモを削除する
+    func deleteMemo(viewContext : NSManagedObjectContext) {
+        for i in 0 ..< memos.count {
+            if memos[i].isSelected {
+                viewContext.delete(memos[i].memo)
+            }
+        }
+        
+        do {
+            try viewContext.save()
+            loadMemos(viewContext: viewContext)
+        } catch {
+            let nsError = error as NSError
+            fatalError("エラー： \(nsError), \(nsError.userInfo)")
         }
     }
 }
