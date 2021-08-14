@@ -12,15 +12,15 @@ struct HomeView: View {
     // managedObjectContextをviewContextとして定義
     @Environment(\.managedObjectContext) private var viewContext
     // メモ削除画面への切り替え
-    @State var isDeleteMode = false
+    @State private var isDeleteMode = false
     // 削除ボタンを有効にするか切り替える
-    @State var canDeleteMemos = false
+    @State private var canDeleteMemos = false
     // シート表示管理
     @State private var showSheet = false
     // プラスボタンのグラデーションの定義
-    let plusButtonGradation =  AngularGradient(gradient: Gradient(colors: [.green, .blue, .green]), center: .center, angle: .degrees(-45))
+    private let plusButtonGradation =  AngularGradient(gradient: Gradient(colors: [.green, .blue, .green]), center: .center, angle: .degrees(-45))
     // 日付を指定書式に変換する
-    let itemFormatter: DateFormatter = {
+    private let itemFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
         formatter.locale = Locale(identifier: "ja_JP")
@@ -161,7 +161,7 @@ struct HomeView: View {
     }
     
     // メモへのチェックを切り替える
-    func toggleMemoForDelete(index i: Int){
+    private func toggleMemoForDelete(index i: Int){
         homeViewModel.memos[i].isSelected.toggle()
         // メモへのチェックが一つでもある場合は、削除可能状態に切り替える
         for memo in homeViewModel.memos{

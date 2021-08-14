@@ -12,14 +12,14 @@ struct AddMemoView: View {
     @State private var memoTextEditor = ""
     @State private var canAddMemo = false
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) private var presentationMode
     
     // HomeViewModelインスタンスを定義
     private let homeViewModel: HomeViewModel
     // 追加ボタンのグラデーションの定義
-    let enableAddMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
+    private let enableAddMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
     // 追加ボタンのグラデーションの定義(非活性ver)
-    let disableAddMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.5), .green.opacity(0.5)]), startPoint: .leading, endPoint: .trailing)
+    private let disableAddMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.5), .green.opacity(0.5)]), startPoint: .leading, endPoint: .trailing)
     // 構造体の初期化
     init(homeViewModel: HomeViewModel) {
         // TextEditorの背景色を透過させる
