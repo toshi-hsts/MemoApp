@@ -13,6 +13,8 @@ struct HomeView: View {
     @Environment(\.managedObjectContext) private var viewContext
     // メモ削除画面への切り替え
     @State var isDeleteMode = false
+    // 削除ボタンを有効にするか切り替える
+    @State var canDeleteMemos = false
     // シート表示管理
     @State private var showSheet = false
     // プラスボタンのグラデーションの定義
@@ -75,7 +77,7 @@ struct HomeView: View {
                                         // 削除用のチェックボタンを表示する
                                         if isDeleteMode {
                                             Button(action: {
-                                                homeViewModel.memos[i].isSelected.toggle()
+                                                toggleMemoForDelete(index: i)
                                             }) {
                                                 Image(systemName: homeViewModel.memos[i].isSelected ? "checkmark.square.fill" : "square")
                                                     .padding(.leading, 10)
@@ -98,7 +100,7 @@ struct HomeView: View {
                                 .contentShape(Rectangle())
                                 .onTapGesture{
                                     if isDeleteMode{
-                                        homeViewModel.memos[i].isSelected.toggle()
+                                        toggleMemoForDelete(index: i)
                                     }
                                 }
                             }
@@ -116,7 +118,7 @@ struct HomeView: View {
                     }) {
                         ZStack{
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.red)
+                                .fill(canDeleteMemos ? Color.red : Color.red.opacity(0.6))
                                 .frame(height: 50)
                                 .padding()
                             Text("選択したメモを削除")
@@ -126,6 +128,8 @@ struct HomeView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.bottom, 30)
+                    // チェックされた削除メモがないときはボタンを無効化する
+                    .disabled(canDeleteMemos == false)
                 }
             }
             // 削除メモ選択中でなければ、メモ追加ボタンを表示する
@@ -153,6 +157,19 @@ struct HomeView: View {
         // メモをCoreDataから読み込む
         .onAppear{
             homeViewModel.loadMemos(viewContext: viewContext)
+        }
+    }
+    
+    // メモへのチェックを切り替える
+    func toggleMemoForDelete(index i: Int){
+        homeViewModel.memos[i].isSelected.toggle()
+        // メモへのチェックが一つでもある場合は、削除可能状態に切り替える
+        for memo in homeViewModel.memos{
+            canDeleteMemos = false
+            if memo.isSelected {
+                canDeleteMemos = true
+                break
+            }
         }
     }
 }
