@@ -10,13 +10,16 @@ import CoreData
 
 struct AddMemoView: View {
     @State private var memoTextEditor = ""
+    @State private var canAddMemo = false
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
     // HomeViewModelインスタンスを定義
     private let homeViewModel: HomeViewModel
     // 追加ボタンのグラデーションの定義
-    let addMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
+    let enableAddMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
+    // 追加ボタンのグラデーションの定義(非活性ver)
+    let disableAddMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.5), .green.opacity(0.5)]), startPoint: .leading, endPoint: .trailing)
     // 構造体の初期化
     init(homeViewModel: HomeViewModel) {
         // TextEditorの背景色を透過させる
@@ -33,6 +36,10 @@ struct AddMemoView: View {
                 .padding(10)
             // メモ入力欄
             TextEditor(text: $memoTextEditor)
+                .onChange(of: memoTextEditor) { _ in
+                    // 入力文字数が空であれば、メモを追加できないようにする
+                    canAddMemo = !memoTextEditor.isEmpty
+                }
             // 区切り線
             Divider()
                 .padding()
@@ -54,7 +61,7 @@ struct AddMemoView: View {
             }) {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(addMemoButtonGradation)
+                        .fill(canAddMemo ? enableAddMemoButtonGradation : disableAddMemoButtonGradation)
                         .frame(height: 50)
                         .padding()
                     Text("+  追加")
@@ -64,6 +71,8 @@ struct AddMemoView: View {
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.bottom, 30)
+            // メモの中身がないときは追加ボタンを無効化する
+            .disabled(canAddMemo == false)
         }
         .background(Color.secondary.opacity(0.3))
         .edgesIgnoringSafeArea(.all)
