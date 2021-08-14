@@ -69,10 +69,10 @@ struct HomeView: View {
                 } else {
                     ScrollView(.vertical) {
                         LazyVStack(alignment: .leading) {
-                            ForEach(0 ..< homeViewModel.memos.count) { i in
+                            ForEach(0 ..< homeViewModel.memos.count, id: \.self) { i in
                                 VStack(alignment: .leading){
                                     HStack{
-                                        // 削除メモ選択中は、チェックボタンを表示する
+                                        // 削除用のチェックボタンを表示する
                                         if isSelectingDeleteMemo {
                                             Button(action: {
                                                 homeViewModel.memos[i].isSelected.toggle()
