@@ -12,7 +12,7 @@ struct HomeView: View {
     // managedObjectContextをviewContextとして定義
     @Environment(\.managedObjectContext) private var viewContext
     // メモ削除画面への切り替え
-    @State var isSelectingDeleteMemo = false
+    @State var isDeleteMode = false
     // シート表示管理
     @State private var showSheet = false
     // プラスボタンのグラデーションの定義
@@ -41,13 +41,13 @@ struct HomeView: View {
                     if homeViewModel.memos.isEmpty == false {
                         Spacer()
                         Button(action: {
-                            isSelectingDeleteMemo.toggle()
+                            isDeleteMode.toggle()
                             // チェックボックスの入力をリセットする
-                            if isSelectingDeleteMemo == false {
+                            if isDeleteMode == false {
                                 homeViewModel.resetSelectedPropery()
                             }
                         }) {
-                            Image(systemName: isSelectingDeleteMemo ? "clear" : "trash")
+                            Image(systemName: isDeleteMode ? "clear" : "trash")
                                 .foregroundColor(.black)
                                 .font(.title2)
                                 .padding(.trailing, 20)
@@ -73,7 +73,7 @@ struct HomeView: View {
                                 VStack(alignment: .leading){
                                     HStack{
                                         // 削除用のチェックボタンを表示する
-                                        if isSelectingDeleteMemo {
+                                        if isDeleteMode {
                                             Button(action: {
                                                 homeViewModel.memos[i].isSelected.toggle()
                                             }) {
@@ -97,7 +97,7 @@ struct HomeView: View {
                                 // 行（セル）がタップされたときの処理
                                 .contentShape(Rectangle())
                                 .onTapGesture{
-                                    if isSelectingDeleteMemo{
+                                    if isDeleteMode{
                                         homeViewModel.memos[i].isSelected.toggle()
                                     }
                                 }
@@ -106,13 +106,13 @@ struct HomeView: View {
                     }
                 }
                 // 削除メモ選択中であれば、削除ボタンを表示する
-                if isSelectingDeleteMemo {
+                if isDeleteMode {
                     // 削除ボタン
                     Button(action: {
                         //　メモ削除
                         homeViewModel.deleteMemo(viewContext: viewContext)
                         // 削除メモ選択状態を終了する
-                        isSelectingDeleteMemo.toggle()
+                        isDeleteMode.toggle()
                     }) {
                         ZStack{
                             RoundedRectangle(cornerRadius: 10)
@@ -129,7 +129,7 @@ struct HomeView: View {
                 }
             }
             // 削除メモ選択中でなければ、メモ追加ボタンを表示する
-            if isSelectingDeleteMemo == false {
+            if isDeleteMode == false {
                 Button(action: {
                     showSheet.toggle()
                 }) {
