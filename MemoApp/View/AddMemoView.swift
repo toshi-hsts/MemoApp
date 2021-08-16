@@ -30,7 +30,7 @@ struct AddMemoView: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            Text("メモの追加")
+            Text(homeViewModel.editMemo == nil ? "メモの追加" : "メモの編集")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(10)
@@ -39,6 +39,12 @@ struct AddMemoView: View {
                 .onChange(of: memoTextEditor) { _ in
                     // 入力文字数が空であれば、メモを追加できないようにする
                     canAddMemo = !memoTextEditor.isEmpty
+                }
+                .onAppear{
+                    // 編集時、テキストエディタに既存メモを代入する
+                    if homeViewModel.editMemo != nil {
+                        memoTextEditor = homeViewModel.editMemo.content!
+                    }
                 }
             // 区切り線
             Divider()
@@ -52,10 +58,17 @@ struct AddMemoView: View {
             Text("ここにdate pickerを入れる")
                 .frame(maxWidth:.infinity, alignment: .center)
                 .padding()
-            // 追加ボタン
+            // 追加・更新ボタン
             Button(action: {
-                //　メモ登録
-                homeViewModel.addMemo(viewContext: viewContext, content: memoTextEditor)
+                if homeViewModel.editMemo == nil{
+                    //　メモ登録
+                    homeViewModel.addMemo(viewContext: viewContext, content: memoTextEditor)
+                } else{
+                    //　メモ更新
+                    homeViewModel.updateMemo(viewContext: viewContext, content: memoTextEditor)
+                    // 編集メモをnilにリセットする
+                    homeViewModel.resetEditMemo()
+                }
                 // シートを閉じる
                 presentationMode.wrappedValue.dismiss()
             }) {
@@ -64,7 +77,7 @@ struct AddMemoView: View {
                         .fill(canAddMemo ? enableAddMemoButtonGradation : disableAddMemoButtonGradation)
                         .frame(height: 50)
                         .padding()
-                    Text("+  追加")
+                    Text(homeViewModel.editMemo == nil ? "+  追加" : "+  更新")
                         .font(.title2)
                         .foregroundColor(.white)
                 }
@@ -79,6 +92,12 @@ struct AddMemoView: View {
         .onTapGesture {
             // キーボードを閉じる
             UIApplication.shared.closeKeyboard()
+        }
+        .onDisappear{
+            // 編集メモをnilにリセットする
+            if homeViewModel.editMemo != nil {
+                homeViewModel.resetEditMemo()
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ import CoreData
 
 class HomeViewModel: ObservableObject {
     @Published var memos: [MemoModel] = []
+    var editMemo: Memo!
     // メモを追加する
     func addMemo(viewContext : NSManagedObjectContext, content: String){
         let newMemo = Memo(context: viewContext)
@@ -60,6 +61,22 @@ class HomeViewModel: ObservableObject {
             }
         }
         
+        do {
+            try viewContext.save()
+            loadMemos(viewContext: viewContext)
+        } catch {
+            let nsError = error as NSError
+            fatalError("エラー： \(nsError), \(nsError.userInfo)")
+        }
+    }
+    // editMemoをnilにリセットする
+    func resetEditMemo(){
+        editMemo = nil
+    }
+    
+    // メモを更新する
+    func updateMemo(viewContext : NSManagedObjectContext, content: String) {
+        editMemo.content = content
         do {
             try viewContext.save()
             loadMemos(viewContext: viewContext)

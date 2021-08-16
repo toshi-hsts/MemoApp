@@ -101,6 +101,9 @@ struct HomeView: View {
                                 .onTapGesture{
                                     if isDeleteMode{
                                         toggleMemoForDelete(index: i)
+                                    } else{
+                                        showSheet.toggle()
+                                        homeViewModel.editMemo = homeViewModel.memos[i].memo
                                     }
                                 }
                             }
