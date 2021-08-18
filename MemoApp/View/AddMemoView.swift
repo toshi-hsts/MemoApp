@@ -11,6 +11,7 @@ import CoreData
 struct AddMemoView: View {
     @State private var memoTextEditor = ""
     @State private var canAddMemo = false
+    @State private var memoDate = Date()
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentationMode
     
@@ -54,18 +55,19 @@ struct AddMemoView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.horizontal, 10)
-            // date pickerを入れるとこ（仮）
-            Text("ここにdate pickerを入れる")
+            // 日付入力
+            DatePicker("", selection: $memoDate, displayedComponents: .date)
+                .labelsHidden()
                 .frame(maxWidth:.infinity, alignment: .center)
                 .padding()
             // 追加・更新ボタン
             Button(action: {
                 if homeViewModel.editMemo == nil{
                     //　メモ登録
-                    homeViewModel.addMemo(viewContext: viewContext, content: memoTextEditor)
+                    homeViewModel.addMemo(viewContext: viewContext, content: memoTextEditor, date: memoDate)
                 } else{
                     //　メモ更新
-                    homeViewModel.updateMemo(viewContext: viewContext, content: memoTextEditor)
+                    homeViewModel.updateMemo(viewContext: viewContext, content: memoTextEditor, date: memoDate)
                     // 編集メモをnilにリセットする
                     homeViewModel.resetEditMemo()
                 }

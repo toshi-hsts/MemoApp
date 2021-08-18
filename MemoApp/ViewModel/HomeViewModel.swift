@@ -12,10 +12,10 @@ class HomeViewModel: ObservableObject {
     @Published var memos: [MemoModel] = []
     var editMemo: Memo!
     // メモを追加する
-    func addMemo(viewContext : NSManagedObjectContext, content: String){
+    func addMemo(viewContext : NSManagedObjectContext, content: String, date: Date){
         let newMemo = Memo(context: viewContext)
         newMemo.content = content
-        newMemo.date = Date()
+        newMemo.date = date
         
         do {
             try viewContext.save()
@@ -75,8 +75,9 @@ class HomeViewModel: ObservableObject {
     }
     
     // メモを更新する
-    func updateMemo(viewContext : NSManagedObjectContext, content: String) {
+    func updateMemo(viewContext : NSManagedObjectContext, content: String, date: Date) {
         editMemo.content = content
+        editMemo.date = date
         do {
             try viewContext.save()
             loadMemos(viewContext: viewContext)
