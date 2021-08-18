@@ -50,7 +50,7 @@ struct HomeView: View {
                             }
                         }) {
                             Image(systemName: isDeleteMode ? "clear" : "trash")
-                                .foregroundColor(.black)
+                                .foregroundColor(.primary)
                                 .font(.title2)
                                 .padding(.trailing, 20)
                         }
@@ -122,12 +122,12 @@ struct HomeView: View {
                     }) {
                         ZStack{
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(canDeleteMemos ? Color.red : Color.red.opacity(0.6))
+                                .fill(canDeleteMemos ? Color.deleteButtonBackgroundColor : Color.deleteButtonBackgroundColor.opacity(0.6))
                                 .frame(height: 50)
                                 .padding()
                             Text("選択したメモを削除")
                                 .font(.title2)
-                                .foregroundColor(.white)
+                                .foregroundColor(.deleteButtonTextColor)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -147,7 +147,7 @@ struct HomeView: View {
                             .frame(width: 70, height: 70, alignment: .center)
                         Text("＋")
                             .font(.largeTitle)
-                            .foregroundColor(.white)
+                            .foregroundColor(.addButtonTextColor)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)

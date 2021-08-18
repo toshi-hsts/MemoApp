@@ -81,7 +81,7 @@ struct AddMemoView: View {
                         .padding()
                     Text(homeViewModel.editMemo == nil ? "+  追加" : "+  更新")
                         .font(.title2)
-                        .foregroundColor(.white)
+                        .foregroundColor(.addButtonTextColor)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)

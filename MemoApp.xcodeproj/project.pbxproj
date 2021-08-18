@@ -15,6 +15,7 @@
 		CA0601BF26BD0CEA00CED8A7 /* MemoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA0601BD26BD0CEA00CED8A7 /* MemoApp.xcdatamodeld */; };
 		CA20852926C6CA7D008FDB9F /* MemoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA20852826C6CA7D008FDB9F /* MemoModel.swift */; };
 		CA2B019F26C40A060021E785 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2B019E26C40A060021E785 /* HomeViewModel.swift */; };
+		CA449D6326CD3E1E009E4A5A /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449D6226CD3E1E009E4A5A /* ColorExtension.swift */; };
 		CA828FD826BFCFC40032D0C8 /* AddMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA828FD726BFCFC40032D0C8 /* AddMemoView.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		CA0601C026BD0CEA00CED8A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA20852826C6CA7D008FDB9F /* MemoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoModel.swift; sourceTree = "<group>"; };
 		CA2B019E26C40A060021E785 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		CA449D6226CD3E1E009E4A5A /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		CA828FD726BFCFC40032D0C8 /* AddMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +67,7 @@
 				CA2B019B26C409320021E785 /* View */,
 				CA2B019D26C409680021E785 /* ViewModel */,
 				CA20852726C667DC008FDB9F /* Model */,
+				CA449D6426CD49C3009E4A5A /* Extension */,
 				CA0601B226BD0CE600CED8A7 /* MemoAppApp.swift */,
 				CA0601BB26BD0CE900CED8A7 /* Persistence.swift */,
 				CA0601C026BD0CEA00CED8A7 /* Info.plist */,
@@ -106,6 +109,14 @@
 				CA2B019E26C40A060021E785 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CA449D6426CD49C3009E4A5A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				CA449D6226CD3E1E009E4A5A /* ColorExtension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,6 +191,7 @@
 				CA0601BC26BD0CE900CED8A7 /* Persistence.swift in Sources */,
 				CA2B019F26C40A060021E785 /* HomeViewModel.swift in Sources */,
 				CA0601B526BD0CE600CED8A7 /* HomeView.swift in Sources */,
+				CA449D6326CD3E1E009E4A5A /* ColorExtension.swift in Sources */,
 				CA828FD826BFCFC40032D0C8 /* AddMemoView.swift in Sources */,
 				CA20852926C6CA7D008FDB9F /* MemoModel.swift in Sources */,
 				CA0601B326BD0CE600CED8A7 /* MemoAppApp.swift in Sources */,
