@@ -86,8 +86,9 @@ struct HomeView: View {
                                         // メモの内容と日付を表示
                                         VStack(alignment: .leading){
                                             Text(homeViewModel.memos[i].memo.content!)
+                                                .lineLimit(2)
                                                 .font(.headline)
-                                                .padding(.horizontal, 5)
+                                                .padding(5)
                                             Text(itemFormatter.string(from: homeViewModel.memos[i].memo.date!))
                                                 .font(.subheadline)
                                                 .padding(.horizontal, 5)
