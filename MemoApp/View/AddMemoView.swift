@@ -9,14 +9,10 @@ import SwiftUI
 import CoreData
 
 struct AddMemoView: View {
-    @State private var memoTextEditor = ""
-    @State private var canAddMemo = false
-    @State private var memoDate = Date()
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentationMode
-    
     // HomeViewModelインスタンスを定義
-    private let homeViewModel: HomeViewModel
+    @ObservedObject var homeViewModel: HomeViewModel
     // 追加ボタンのグラデーションの定義
     private let enableAddMemoButtonGradation = LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .leading, endPoint: .trailing)
     // 追加ボタンのグラデーションの定義(非活性ver)
@@ -36,15 +32,15 @@ struct AddMemoView: View {
                 .fontWeight(.bold)
                 .padding(10)
             // メモ入力欄
-            TextEditor(text: $memoTextEditor)
-                .onChange(of: memoTextEditor) { _ in
+            TextEditor(text: $homeViewModel.memoTextEditor)
+                .onChange(of: homeViewModel.memoTextEditor) { _ in
                     // 入力文字数が空であれば、メモを追加できないようにする
-                    canAddMemo = !memoTextEditor.isEmpty
+                    homeViewModel.canAddMemo = !homeViewModel.memoTextEditor.isEmpty
                 }
                 .onAppear{
                     // 編集時、テキストエディタに既存メモを代入する
                     if homeViewModel.editMemo != nil {
-                        memoTextEditor = homeViewModel.editMemo.content!
+                        homeViewModel.memoTextEditor = homeViewModel.editMemo.content!
                     }
                 }
             // 区切り線
@@ -56,7 +52,7 @@ struct AddMemoView: View {
                 .fontWeight(.bold)
                 .padding(.horizontal, 10)
             // 日付入力
-            DatePicker("", selection: $memoDate, displayedComponents: .date)
+            DatePicker("", selection: $homeViewModel.memoDate, displayedComponents: .date)
                 .labelsHidden()
                 .frame(maxWidth:.infinity, alignment: .center)
                 .padding()
@@ -64,19 +60,21 @@ struct AddMemoView: View {
             Button(action: {
                 if homeViewModel.editMemo == nil{
                     //　メモ登録
-                    homeViewModel.addMemo(viewContext: viewContext, content: memoTextEditor, date: memoDate)
+                    homeViewModel.addMemo(viewContext: viewContext, content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
                 } else{
                     //　メモ更新
-                    homeViewModel.updateMemo(viewContext: viewContext, content: memoTextEditor, date: memoDate)
+                    homeViewModel.updateMemo(viewContext: viewContext, content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
                     // 編集メモをnilにリセットする
                     homeViewModel.resetEditMemo()
                 }
+                // メモをリセット
+                homeViewModel.resetInputedMemo()
                 // シートを閉じる
                 presentationMode.wrappedValue.dismiss()
             }) {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(canAddMemo ? enableAddMemoButtonGradation : disableAddMemoButtonGradation)
+                        .fill(homeViewModel.canAddMemo ? enableAddMemoButtonGradation : disableAddMemoButtonGradation)
                         .frame(height: 50)
                         .padding()
                     Text(homeViewModel.editMemo == nil ? "+  追加" : "+  更新")
@@ -87,7 +85,7 @@ struct AddMemoView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.bottom, 30)
             // メモの中身がないときは追加ボタンを無効化する
-            .disabled(canAddMemo == false)
+            .disabled(homeViewModel.canAddMemo == false)
         }
         .background(Color.secondary.opacity(0.3))
         .edgesIgnoringSafeArea(.all)

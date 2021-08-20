@@ -9,7 +9,18 @@ import Foundation
 import CoreData
 
 class HomeViewModel: ObservableObject {
+    // メモ配列
     @Published var memos: [MemoModel] = []
+    // メモ削除画面への切り替え
+    @Published var isDeleteMode = false
+    // 削除ボタンを有効にするか切り替える
+    @Published var canDeleteMemos = false
+    // シート表示管理
+    @Published var showSheet = false
+    @Published var memoTextEditor = ""
+    @Published var canAddMemo = false
+    @Published var memoDate = Date()
+    // 編集メモを一時的に格納
     var editMemo: Memo!
     // メモを追加する
     func addMemo(viewContext : NSManagedObjectContext, content: String, date: Date){
@@ -85,5 +96,10 @@ class HomeViewModel: ObservableObject {
             let nsError = error as NSError
             fatalError("エラー： \(nsError), \(nsError.userInfo)")
         }
+    }
+    // 入力されたメモをリセットする
+    func resetInputedMemo(){
+        memoTextEditor = ""
+        memoDate = Date()
     }
 }

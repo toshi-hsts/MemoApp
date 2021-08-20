@@ -11,12 +11,8 @@ import CoreData
 struct HomeView: View {
     // managedObjectContextをviewContextとして定義
     @Environment(\.managedObjectContext) private var viewContext
-    // メモ削除画面への切り替え
-    @State private var isDeleteMode = false
-    // 削除ボタンを有効にするか切り替える
-    @State private var canDeleteMemos = false
-    // シート表示管理
-    @State private var showSheet = false
+    // HomeViewModelのインスタンス生成
+    @ObservedObject private var homeViewModel = HomeViewModel()
     // プラスボタンのグラデーションの定義
     private let plusButtonGradation =  AngularGradient(gradient: Gradient(colors: [.green, .blue, .green]), center: .center, angle: .degrees(-45))
     // 日付を指定書式に変換する
@@ -28,8 +24,6 @@ struct HomeView: View {
         formatter.dateFormat = "yyyy年MM月d日(EEEEE)"
         return formatter
     }()
-    // HomeViewModelのインスタンス生成
-    @ObservedObject private var homeViewModel = HomeViewModel()
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -43,13 +37,13 @@ struct HomeView: View {
                     if homeViewModel.memos.isEmpty == false {
                         Spacer()
                         Button(action: {
-                            isDeleteMode.toggle()
+                            homeViewModel.isDeleteMode.toggle()
                             // チェックボックスの入力をリセットする
-                            if isDeleteMode == false {
+                            if homeViewModel.isDeleteMode == false {
                                 homeViewModel.resetSelectedPropery()
                             }
                         }) {
-                            Image(systemName: isDeleteMode ? "clear" : "trash")
+                            Image(systemName: homeViewModel.isDeleteMode ? "clear" : "trash")
                                 .foregroundColor(.primary)
                                 .font(.title2)
                                 .padding(.trailing, 20)
@@ -75,7 +69,7 @@ struct HomeView: View {
                                 VStack(alignment: .leading){
                                     HStack{
                                         // 削除用のチェックボタンを表示する
-                                        if isDeleteMode {
+                                        if homeViewModel.isDeleteMode {
                                             Button(action: {
                                                 toggleMemoForDelete(index: i)
                                             }) {
@@ -100,10 +94,10 @@ struct HomeView: View {
                                 // 行（セル）がタップされたときの処理
                                 .contentShape(Rectangle())
                                 .onTapGesture{
-                                    if isDeleteMode{
+                                    if homeViewModel.isDeleteMode{
                                         toggleMemoForDelete(index: i)
                                     } else{
-                                        showSheet.toggle()
+                                        homeViewModel.showSheet.toggle()
                                         homeViewModel.editMemo = homeViewModel.memos[i].memo
                                     }
                                 }
@@ -112,17 +106,17 @@ struct HomeView: View {
                     }
                 }
                 // 削除メモ選択中であれば、削除ボタンを表示する
-                if isDeleteMode {
+                if homeViewModel.isDeleteMode {
                     // 削除ボタン
                     Button(action: {
                         //　メモ削除
                         homeViewModel.deleteMemo(viewContext: viewContext)
                         // 削除メモ選択状態を終了する
-                        isDeleteMode.toggle()
+                        homeViewModel.isDeleteMode.toggle()
                     }) {
                         ZStack{
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(canDeleteMemos ? Color.deleteButtonBackgroundColor : Color.deleteButtonBackgroundColor.opacity(0.6))
+                                .fill(homeViewModel.canDeleteMemos ? Color.deleteButtonBackgroundColor : Color.deleteButtonBackgroundColor.opacity(0.6))
                                 .frame(height: 50)
                                 .padding()
                             Text("選択したメモを削除")
@@ -133,13 +127,13 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.bottom, 30)
                     // チェックされた削除メモがないときはボタンを無効化する
-                    .disabled(canDeleteMemos == false)
+                    .disabled(homeViewModel.canDeleteMemos == false)
                 }
             }
             // 削除メモ選択中でなければ、メモ追加ボタンを表示する
-            if isDeleteMode == false {
+            if homeViewModel.isDeleteMode == false {
                 Button(action: {
-                    showSheet.toggle()
+                    homeViewModel.showSheet.toggle()
                 }) {
                     ZStack{
                         Circle()
@@ -155,7 +149,7 @@ struct HomeView: View {
             }
         }
         // シート表示
-        .sheet(isPresented: $showSheet) {
+        .sheet(isPresented: $homeViewModel.showSheet) {
             AddMemoView(homeViewModel: homeViewModel)
         }
         // メモをCoreDataから読み込む
@@ -169,9 +163,9 @@ struct HomeView: View {
         homeViewModel.memos[i].isSelected.toggle()
         // メモへのチェックが一つでもある場合は、削除可能状態に切り替える
         for memo in homeViewModel.memos{
-            canDeleteMemos = false
+            homeViewModel.canDeleteMemos = false
             if memo.isSelected {
-                canDeleteMemos = true
+                homeViewModel.canDeleteMemos = true
                 break
             }
         }
