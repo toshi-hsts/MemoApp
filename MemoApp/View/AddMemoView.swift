@@ -60,7 +60,9 @@ struct AddMemoView: View {
             Button(action: {
                 if homeViewModel.editMemo == nil{
                     //　メモ登録
-                    homeViewModel.addMemo(viewContext: viewContext, content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
+                    homeViewModel.addMemo(content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
+                    // メモ読み込み
+                    homeViewModel.loadMemos(viewContext: viewContext)
                 } else{
                     //　メモ更新
                     homeViewModel.updateMemo(viewContext: viewContext, content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)

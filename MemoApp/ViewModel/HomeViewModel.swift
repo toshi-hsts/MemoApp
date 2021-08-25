@@ -23,18 +23,13 @@ class HomeViewModel: ObservableObject {
     // 編集メモを一時的に格納
     var editMemo: Memo!
     // メモを追加する
-    func addMemo(viewContext : NSManagedObjectContext, content: String, date: Date){
-        let newMemo = Memo(context: viewContext)
+    func addMemo(content: String, date: Date){
+        let newMemo = CoreDataModel.newMemo()
         newMemo.content = content
         newMemo.date = date
         
-        do {
-            try viewContext.save()
-            loadMemos(viewContext: viewContext)
-        } catch {
-            let nsError = error as NSError
-            fatalError("エラー： \(nsError), \(nsError.userInfo)")
-        }
+        CoreDataModel.insert(newMemo)
+        CoreDataModel.save()
     }
     // メモを取得する
     func loadMemos(viewContext : NSManagedObjectContext){
