@@ -12,7 +12,7 @@ struct HomeView: View {
     // managedObjectContextをviewContextとして定義
     @Environment(\.managedObjectContext) private var viewContext
     // HomeViewModelのインスタンス生成
-    @ObservedObject private var homeViewModel = HomeViewModel()
+    @StateObject private var homeViewModel = HomeViewModel()
     // プラスボタンのグラデーションの定義
     private let plusButtonGradation =  AngularGradient(gradient: Gradient(colors: [.green, .blue, .green]), center: .center, angle: .degrees(-45))
     // 日付を指定書式に変換する
