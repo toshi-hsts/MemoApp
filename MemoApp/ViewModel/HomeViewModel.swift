@@ -48,19 +48,13 @@ class HomeViewModel: ObservableObject {
         }
     }
     // メモを削除する
-    func deleteMemo(viewContext : NSManagedObjectContext) {
+    func deleteMemo() {
         for i in 0 ..< memos.count {
             if memos[i].isSelected {
-                viewContext.delete(memos[i].memo)
+                CoreDataModel.delete(memos[i].memo)
             }
         }
-        
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("エラー： \(nsError), \(nsError.userInfo)")
-        }
+        CoreDataModel.save()
     }
     // editMemoをnilにリセットする
     func resetEditMemo(){

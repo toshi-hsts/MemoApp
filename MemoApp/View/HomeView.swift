@@ -110,7 +110,7 @@ struct HomeView: View {
                     // 削除ボタン
                     Button(action: {
                         //　メモ削除
-                        homeViewModel.deleteMemo(viewContext: viewContext)
+                        homeViewModel.deleteMemo()
                         // メモ読み込み
                         homeViewModel.fetchMemos()
                         // 削除メモ選択状態を終了する

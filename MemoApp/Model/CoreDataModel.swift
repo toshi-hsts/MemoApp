@@ -13,13 +13,16 @@ class CoreDataModel{
     private static let persistenceContainer = PersistenceController.shared.container
     // viewContextを定義
     private static var viewContext: NSManagedObjectContext {
-     return persistenceContainer.viewContext
+        return persistenceContainer.viewContext
     }
-    // DB保存前の領域に登録
+    // DB保存前の領域にinsert登録
     static func insert(_ object: NSManagedObject) {
         viewContext.insert(object)
     }
-    
+    // DB保存前の領域にdelete登録
+    static func delete(_ object: NSManagedObject) {
+        viewContext.delete(object)
+    }
     // DBに保存
     static func save() {
         do {
