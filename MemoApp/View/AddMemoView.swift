@@ -102,13 +102,6 @@ struct AddMemoView: View {
     }
 }
 
-extension UIApplication {
-    // キーボードを閉じる
-    func closeKeyboard() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
 struct AddMemoView_Previews: PreviewProvider {
     static var previews: some View {
         AddMemoView(homeViewModel: HomeViewModel())

@@ -16,6 +16,7 @@
 		CA20852926C6CA7D008FDB9F /* MemoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA20852826C6CA7D008FDB9F /* MemoModel.swift */; };
 		CA2B019F26C40A060021E785 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2B019E26C40A060021E785 /* HomeViewModel.swift */; };
 		CA449D6326CD3E1E009E4A5A /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449D6226CD3E1E009E4A5A /* ColorExtension.swift */; };
+		CA5C4CCA26D6AE7E0019639B /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C4CC926D6AE7E0019639B /* UIApplication.swift */; };
 		CA828FD826BFCFC40032D0C8 /* AddMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA828FD726BFCFC40032D0C8 /* AddMemoView.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		CA20852826C6CA7D008FDB9F /* MemoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoModel.swift; sourceTree = "<group>"; };
 		CA2B019E26C40A060021E785 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		CA449D6226CD3E1E009E4A5A /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		CA5C4CC926D6AE7E0019639B /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		CA828FD726BFCFC40032D0C8 /* AddMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				CA449D6226CD3E1E009E4A5A /* ColorExtension.swift */,
+				CA5C4CC926D6AE7E0019639B /* UIApplication.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA5C4CCA26D6AE7E0019639B /* UIApplication.swift in Sources */,
 				CA0601BC26BD0CE900CED8A7 /* Persistence.swift in Sources */,
 				CA2B019F26C40A060021E785 /* HomeViewModel.swift in Sources */,
 				CA0601B526BD0CE600CED8A7 /* HomeView.swift in Sources */,
