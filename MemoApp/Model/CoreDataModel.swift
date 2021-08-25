@@ -13,8 +13,8 @@ class CoreDataModel{
     private static let persistenceContainer = PersistenceController.shared.container
     // viewContextを定義
     private static var viewContext: NSManagedObjectContext {
-            return persistenceContainer.viewContext
-        }
+     return persistenceContainer.viewContext
+    }
     // DB保存前の領域に登録
     static func insert(_ object: NSManagedObject) {
         viewContext.insert(object)
@@ -37,6 +37,23 @@ extension CoreDataModel{
         let entity = NSEntityDescription.entity(forEntityName: "Memo", in: viewContext)!
         let memo = Memo(entity: entity, insertInto: nil)
         return memo
+    }
+    
+    // メモを読み込む
+    static func fetchMemos() -> [Memo]{
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Memo")
+        
+        // dateで昇順にソート
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        
+        do {
+            return try viewContext.fetch(request) as! [Memo]            
+        }
+        catch {
+            let nsError = error as NSError
+            fatalError("エラー： \(nsError), \(nsError.userInfo)")
+        }
     }
 }
 

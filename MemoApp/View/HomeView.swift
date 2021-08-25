@@ -111,6 +111,8 @@ struct HomeView: View {
                     Button(action: {
                         //　メモ削除
                         homeViewModel.deleteMemo(viewContext: viewContext)
+                        // メモ読み込み
+                        homeViewModel.fetchMemos()
                         // 削除メモ選択状態を終了する
                         homeViewModel.isDeleteMode.toggle()
                     }) {
@@ -154,7 +156,7 @@ struct HomeView: View {
         }
         // メモをCoreDataから読み込む
         .onAppear{
-            homeViewModel.loadMemos(viewContext: viewContext)
+            homeViewModel.fetchMemos()
         }
     }
 }

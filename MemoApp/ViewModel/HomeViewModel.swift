@@ -32,25 +32,13 @@ class HomeViewModel: ObservableObject {
         CoreDataModel.save()
     }
     // メモを取得する
-    func loadMemos(viewContext : NSManagedObjectContext){
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Memo")
-        
-        // dateで昇順にソート
-        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        
-        do {
-            let fetchedMemos = try viewContext.fetch(request) as! [Memo]
-            // メモ配列を初期化
-            memos = []
-            // CoreDataのメモをPublished変数に読み込む
-            fetchedMemos.forEach{
-                memos.append(MemoModel(isSelected: false, memo: $0))
-            }
-        }
-        catch {
-            let nsError = error as NSError
-            fatalError("エラー： \(nsError), \(nsError.userInfo)")
+    func fetchMemos(){
+        let fetchedMemos = CoreDataModel.fetchMemos()
+        // メモ配列を初期化
+        memos = []
+        // CoreDataのメモをPublished変数に読み込む
+        fetchedMemos.forEach{
+            memos.append(MemoModel(isSelected: false, memo: $0))
         }
     }    
     // isSelectedプロパティをfalseにする
@@ -69,7 +57,6 @@ class HomeViewModel: ObservableObject {
         
         do {
             try viewContext.save()
-            loadMemos(viewContext: viewContext)
         } catch {
             let nsError = error as NSError
             fatalError("エラー： \(nsError), \(nsError.userInfo)")
@@ -86,7 +73,6 @@ class HomeViewModel: ObservableObject {
         editMemo.date = date
         do {
             try viewContext.save()
-            loadMemos(viewContext: viewContext)
         } catch {
             let nsError = error as NSError
             fatalError("エラー： \(nsError), \(nsError.userInfo)")

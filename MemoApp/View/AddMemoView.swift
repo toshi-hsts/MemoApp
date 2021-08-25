@@ -61,14 +61,14 @@ struct AddMemoView: View {
                 if homeViewModel.editMemo == nil{
                     //　メモ登録
                     homeViewModel.addMemo(content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
-                    // メモ読み込み
-                    homeViewModel.loadMemos(viewContext: viewContext)
                 } else{
                     //　メモ更新
                     homeViewModel.updateMemo(viewContext: viewContext, content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
                     // 編集メモをnilにリセットする
                     homeViewModel.resetEditMemo()
                 }
+                // メモ読み込み
+                homeViewModel.fetchMemos()
                 // メモをリセット
                 homeViewModel.resetInputedMemo()
                 // シートを閉じる
