@@ -71,7 +71,7 @@ struct HomeView: View {
                                         // 削除用のチェックボタンを表示する
                                         if homeViewModel.isDeleteMode {
                                             Button(action: {
-                                                toggleMemoForDelete(index: i)
+                                                homeViewModel.toggleMemoForDelete(index: i)
                                             }) {
                                                 Image(systemName: homeViewModel.memos[i].isSelected ? "checkmark.square.fill" : "square")
                                                     .padding(.leading, 10)
@@ -95,7 +95,7 @@ struct HomeView: View {
                                 .contentShape(Rectangle())
                                 .onTapGesture{
                                     if homeViewModel.isDeleteMode{
-                                        toggleMemoForDelete(index: i)
+                                        homeViewModel.toggleMemoForDelete(index: i)
                                     } else{
                                         homeViewModel.showSheet.toggle()
                                         homeViewModel.editMemo = homeViewModel.memos[i].memo
@@ -155,19 +155,6 @@ struct HomeView: View {
         // メモをCoreDataから読み込む
         .onAppear{
             homeViewModel.loadMemos(viewContext: viewContext)
-        }
-    }
-    
-    // メモへのチェックを切り替える
-    private func toggleMemoForDelete(index i: Int){
-        homeViewModel.memos[i].isSelected.toggle()
-        // メモへのチェックが一つでもある場合は、削除可能状態に切り替える
-        for memo in homeViewModel.memos{
-            homeViewModel.canDeleteMemos = false
-            if memo.isSelected {
-                homeViewModel.canDeleteMemos = true
-                break
-            }
         }
     }
 }

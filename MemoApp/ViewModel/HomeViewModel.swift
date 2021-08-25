@@ -102,4 +102,17 @@ class HomeViewModel: ObservableObject {
         memoTextEditor = ""
         memoDate = Date()
     }
+    
+    // メモへのチェックを切り替える
+    func toggleMemoForDelete(index i: Int){
+        memos[i].isSelected.toggle()
+        // メモへのチェックが一つでもある場合は、削除可能状態に切り替える
+        for memo in memos{
+            canDeleteMemos = false
+            if memo.isSelected {
+                canDeleteMemos = true
+                break
+            }
+        }
+    }
 }
