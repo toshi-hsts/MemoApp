@@ -16,7 +16,9 @@ class HomeViewModel: ObservableObject {
     @Published var canDeleteMemos = false
     // シート表示管理
     @Published var showSheet = false
+    // メモのテキスト
     @Published var memoTextEditor = ""
+    // メモの日付
     @Published var memoDate = Date()
     // 編集メモを一時的に格納
     var editMemo: Memo!
