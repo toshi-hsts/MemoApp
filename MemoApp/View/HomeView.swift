@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    // managedObjectContextをviewContextとして定義
-    @Environment(\.managedObjectContext) private var viewContext
     // HomeViewModelのインスタンス生成
     @StateObject private var homeViewModel = HomeViewModel()
     // プラスボタンのグラデーションの定義
@@ -163,6 +161,5 @@ struct HomeView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

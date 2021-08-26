@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AddMemoView: View {
-    @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) private var presentationMode
     // HomeViewModelインスタンスを定義
     @ObservedObject var homeViewModel: HomeViewModel
