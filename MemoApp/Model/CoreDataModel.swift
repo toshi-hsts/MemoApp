@@ -10,21 +10,21 @@ import CoreData
 
 class CoreDataModel{
     // NSPersistentContainerの初期化
-    private static let persistenceContainer = PersistenceController.shared.container
+    private let persistenceContainer = PersistenceController.shared.container
     // viewContextを定義
-    private static var viewContext: NSManagedObjectContext {
+    private var viewContext: NSManagedObjectContext {
         return persistenceContainer.viewContext
     }
     // DB保存前の領域にinsert登録
-    static func insert(_ object: NSManagedObject) {
+    func insert(_ object: NSManagedObject) {
         viewContext.insert(object)
     }
     // DB保存前の領域にdelete登録
-    static func delete(_ object: NSManagedObject) {
+    func delete(_ object: NSManagedObject) {
         viewContext.delete(object)
     }
     // DBに保存
-    static func save() {
+    func save() {
         do {
             try viewContext.save()
         } catch {
@@ -36,14 +36,14 @@ class CoreDataModel{
 
 extension CoreDataModel{
     // 新しいメモを生成
-    static func newMemo() -> Memo {
+    func newMemo() -> Memo {
         let entity = NSEntityDescription.entity(forEntityName: "Memo", in: viewContext)!
         let memo = Memo(entity: entity, insertInto: nil)
         return memo
     }
     
     // メモを読み込む
-    static func fetchMemos() -> [Memo]{
+    func fetchMemos() -> [Memo]{
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Memo")
         
         // dateで昇順にソート

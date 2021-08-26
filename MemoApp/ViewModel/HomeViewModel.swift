@@ -21,18 +21,21 @@ class HomeViewModel: ObservableObject {
     @Published var memoDate = Date()
     // 編集メモを一時的に格納
     var editMemo: Memo!
+    // CoreDataModelをインスタンス化
+    private let coreDataModel = CoreDataModel()
+    
     // メモを追加する
     func addMemo(content: String, date: Date){
-        let newMemo = CoreDataModel.newMemo()
+        let newMemo = coreDataModel.newMemo()
         newMemo.content = content
         newMemo.date = date
         
-        CoreDataModel.insert(newMemo)
-        CoreDataModel.save()
+        coreDataModel.insert(newMemo)
+        coreDataModel.save()
     }
     // メモを取得する
     func fetchMemos(){
-        let fetchedMemos = CoreDataModel.fetchMemos()
+        let fetchedMemos = coreDataModel.fetchMemos()
         // メモ配列を初期化
         memos = []
         // CoreDataのメモをPublished変数に読み込む
@@ -50,10 +53,10 @@ class HomeViewModel: ObservableObject {
     func deleteMemo() {
         for i in 0 ..< memos.count {
             if memos[i].isSelected {
-                CoreDataModel.delete(memos[i].memo)
+                coreDataModel.delete(memos[i].memo)
             }
         }
-        CoreDataModel.save()
+        coreDataModel.save()
     }
     // editMemoをnilにリセットする
     func resetEditMemo(){
@@ -65,7 +68,7 @@ class HomeViewModel: ObservableObject {
         editMemo.content = content
         editMemo.date = date
         
-        CoreDataModel.save()
+        coreDataModel.save()
     }
     // 入力されたメモをリセットする
     func resetInputedMemo(){
