@@ -31,10 +31,6 @@ struct AddMemoView: View {
                 .padding(10)
             // メモ入力欄
             TextEditor(text: $homeViewModel.memoTextEditor)
-                .onChange(of: homeViewModel.memoTextEditor) { _ in
-                    // 入力文字数が空であれば、メモを追加できないようにする
-                    homeViewModel.canAddMemo = !homeViewModel.memoTextEditor.isEmpty
-                }
                 .onAppear{
                     // 編集時、テキストエディタに既存メモを代入する
                     if homeViewModel.editMemo != nil {
@@ -80,7 +76,7 @@ struct AddMemoView: View {
             }) {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(homeViewModel.canAddMemo ? enableAddMemoButtonGradation : disableAddMemoButtonGradation)
+                        .fill(homeViewModel.memoTextEditor.isEmpty ? disableAddMemoButtonGradation : enableAddMemoButtonGradation)
                         .frame(height: 50)
                         .padding()
                     Text(homeViewModel.editMemo == nil ? "+  追加" : "+  更新")
@@ -91,7 +87,7 @@ struct AddMemoView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.bottom, 30)
             // メモの中身がないときは追加ボタンを無効化する
-            .disabled(homeViewModel.canAddMemo == false)
+            .disabled(homeViewModel.memoTextEditor.isEmpty)
         }
         .background(Color.secondary.opacity(0.3))
         .edgesIgnoringSafeArea(.all)
