@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreData
 
 class HomeViewModel: ObservableObject {
     // メモ配列
@@ -62,15 +61,11 @@ class HomeViewModel: ObservableObject {
     }
     
     // メモを更新する
-    func updateMemo(viewContext : NSManagedObjectContext, content: String, date: Date) {
+    func updateMemo(content: String, date: Date) {
         editMemo.content = content
         editMemo.date = date
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("エラー： \(nsError), \(nsError.userInfo)")
-        }
+        
+        CoreDataModel.save()
     }
     // 入力されたメモをリセットする
     func resetInputedMemo(){

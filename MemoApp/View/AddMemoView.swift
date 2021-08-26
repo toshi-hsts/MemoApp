@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct AddMemoView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -56,6 +55,12 @@ struct AddMemoView: View {
                 .labelsHidden()
                 .frame(maxWidth:.infinity, alignment: .center)
                 .padding()
+                .onAppear{
+                    // 編集時、テキストエディタに既存日付を代入する
+                    if homeViewModel.editMemo != nil {
+                        homeViewModel.memoDate = homeViewModel.editMemo.date!
+                    }
+                }
             // 追加・更新ボタン
             Button(action: {
                 if homeViewModel.editMemo == nil{
@@ -63,7 +68,7 @@ struct AddMemoView: View {
                     homeViewModel.addMemo(content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
                 } else{
                     //　メモ更新
-                    homeViewModel.updateMemo(viewContext: viewContext, content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
+                    homeViewModel.updateMemo(content: homeViewModel.memoTextEditor, date: homeViewModel.memoDate)
                     // 編集メモをnilにリセットする
                     homeViewModel.resetEditMemo()
                 }
