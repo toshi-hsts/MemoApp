@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MemoAppApp: App {
+    @StateObject private var homeViewModel = HomeViewModel()
+    
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(homeViewModel)
         }
     }
 }

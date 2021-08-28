@@ -16,6 +16,11 @@
 		CA20852926C6CA7D008FDB9F /* MemoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA20852826C6CA7D008FDB9F /* MemoModel.swift */; };
 		CA2B019F26C40A060021E785 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2B019E26C40A060021E785 /* HomeViewModel.swift */; };
 		CA449D6326CD3E1E009E4A5A /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449D6226CD3E1E009E4A5A /* ColorExtension.swift */; };
+		CA50007426DA304700B033C1 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA50007326DA304700B033C1 /* HeaderView.swift */; };
+		CA50007626DA734800B033C1 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA50007526DA734800B033C1 /* ListView.swift */; };
+		CA50007826DA74ED00B033C1 /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA50007726DA74ED00B033C1 /* RowView.swift */; };
+		CA50007A26DA772000B033C1 /* DeleteButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA50007926DA772000B033C1 /* DeleteButtonView.swift */; };
+		CA50007C26DA7B9A00B033C1 /* AddButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA50007B26DA7B9A00B033C1 /* AddButtonView.swift */; };
 		CA5C4CCA26D6AE7E0019639B /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C4CC926D6AE7E0019639B /* UIApplication.swift */; };
 		CA5C4CCC26D6AF110019639B /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C4CCB26D6AF110019639B /* CoreDataModel.swift */; };
 		CA828FD826BFCFC40032D0C8 /* AddMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA828FD726BFCFC40032D0C8 /* AddMemoView.swift */; };
@@ -33,6 +38,11 @@
 		CA20852826C6CA7D008FDB9F /* MemoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoModel.swift; sourceTree = "<group>"; };
 		CA2B019E26C40A060021E785 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		CA449D6226CD3E1E009E4A5A /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		CA50007326DA304700B033C1 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		CA50007526DA734800B033C1 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		CA50007726DA74ED00B033C1 /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
+		CA50007926DA772000B033C1 /* DeleteButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButtonView.swift; sourceTree = "<group>"; };
+		CA50007B26DA7B9A00B033C1 /* AddButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButtonView.swift; sourceTree = "<group>"; };
 		CA5C4CC926D6AE7E0019639B /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		CA5C4CCB26D6AF110019639B /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		CA828FD726BFCFC40032D0C8 /* AddMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoView.swift; sourceTree = "<group>"; };
@@ -69,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				CA2B019B26C409320021E785 /* View */,
+				CA828FD726BFCFC40032D0C8 /* AddMemoView.swift */,
 				CA2B019D26C409680021E785 /* ViewModel */,
 				CA20852726C667DC008FDB9F /* Model */,
 				CA449D6426CD49C3009E4A5A /* Extension */,
@@ -102,8 +113,7 @@
 		CA2B019B26C409320021E785 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CA0601B426BD0CE600CED8A7 /* HomeView.swift */,
-				CA828FD726BFCFC40032D0C8 /* AddMemoView.swift */,
+				CA50007126DA2B5A00B033C1 /* HomeView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -123,6 +133,19 @@
 				CA5C4CC926D6AE7E0019639B /* UIApplication.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		CA50007126DA2B5A00B033C1 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				CA0601B426BD0CE600CED8A7 /* HomeView.swift */,
+				CA50007326DA304700B033C1 /* HeaderView.swift */,
+				CA50007526DA734800B033C1 /* ListView.swift */,
+				CA50007726DA74ED00B033C1 /* RowView.swift */,
+				CA50007926DA772000B033C1 /* DeleteButtonView.swift */,
+				CA50007B26DA7B9A00B033C1 /* AddButtonView.swift */,
+			);
+			path = HomeView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,14 +218,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA5C4CCA26D6AE7E0019639B /* UIApplication.swift in Sources */,
+				CA50007826DA74ED00B033C1 /* RowView.swift in Sources */,
 				CA0601BC26BD0CE900CED8A7 /* Persistence.swift in Sources */,
 				CA2B019F26C40A060021E785 /* HomeViewModel.swift in Sources */,
+				CA50007A26DA772000B033C1 /* DeleteButtonView.swift in Sources */,
 				CA0601B526BD0CE600CED8A7 /* HomeView.swift in Sources */,
 				CA449D6326CD3E1E009E4A5A /* ColorExtension.swift in Sources */,
 				CA828FD826BFCFC40032D0C8 /* AddMemoView.swift in Sources */,
 				CA20852926C6CA7D008FDB9F /* MemoModel.swift in Sources */,
+				CA50007426DA304700B033C1 /* HeaderView.swift in Sources */,
+				CA50007626DA734800B033C1 /* ListView.swift in Sources */,
 				CA0601B326BD0CE600CED8A7 /* MemoAppApp.swift in Sources */,
 				CA5C4CCC26D6AF110019639B /* CoreDataModel.swift in Sources */,
+				CA50007C26DA7B9A00B033C1 /* AddButtonView.swift in Sources */,
 				CA0601BF26BD0CEA00CED8A7 /* MemoApp.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
