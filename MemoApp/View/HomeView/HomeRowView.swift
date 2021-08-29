@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RowView: View {
+struct HomeRowView: View {
     // HomeViewModelの環境オブジェクト
     @EnvironmentObject var homeViewModel: HomeViewModel
     // 索引

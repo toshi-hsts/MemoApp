@@ -15,23 +15,24 @@ struct HomeView: View {
         ZStack(alignment: .bottom) {
             VStack(alignment: .leading) {
                 // ヘッダ
-                HeaderView()
+                HomeHeaderView()
                 // メモリスト
-                ListView()
+                HomeListView()
                 // 削除メモ選択中であれば、削除ボタンを表示する
                 if homeViewModel.isDeleteMode {
                     // 削除ボタン
-                    DeleteButtonView()
+                    HomeDeleteButtonView()
                 }
             }
             // 削除メモ選択中でなければ、メモ追加ボタンを表示する
             if homeViewModel.isDeleteMode == false {
-                AddButtonView()
+                HomeAddButtonView()
             }
         }
         // シート表示
         .sheet(isPresented: $homeViewModel.showSheet) {
-            AddMemoView(homeViewModel: homeViewModel)
+            AddMemoView()
+                .environmentObject(homeViewModel)
         }
         // メモをCoreDataから読み込む
         .onAppear{

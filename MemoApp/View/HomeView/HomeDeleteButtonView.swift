@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DeleteButtonView: View {
+struct HomeDeleteButtonView: View {
     // HomeViewModelの環境オブジェクト
     @EnvironmentObject var homeViewModel: HomeViewModel
     

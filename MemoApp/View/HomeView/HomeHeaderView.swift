@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HeaderView: View {
+struct HomeHeaderView: View {
     // HomeViewModelの環境オブジェクト
     @EnvironmentObject var homeViewModel: HomeViewModel
     

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddButtonView: View {
+struct HomeAddButtonView: View {
     // HomeViewModelの環境オブジェクト
     @EnvironmentObject var homeViewModel: HomeViewModel
     // プラスボタンのグラデーションの定義
@@ -16,6 +16,7 @@ struct AddButtonView: View {
     var body: some View {
         Button(action: {
             homeViewModel.showSheet.toggle()
+            homeViewModel.resetInputedMemo()
         }) {
             ZStack{
                 Circle()

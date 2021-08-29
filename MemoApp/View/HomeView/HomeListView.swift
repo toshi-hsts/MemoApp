@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListView: View {
+struct HomeListView: View {
     // HomeViewModelの環境オブジェクト
     @EnvironmentObject var homeViewModel: HomeViewModel
 
@@ -28,7 +28,7 @@ struct ListView: View {
             ScrollView(.vertical) {
                 LazyVStack(alignment: .leading) {
                     ForEach(0 ..< homeViewModel.memos.count, id: \.self) { i in
-                        RowView(index: i)
+                        HomeRowView(index: i)
                         // 行（セル）がタップされたときの処理
                         .contentShape(Rectangle())
                         .onTapGesture{
