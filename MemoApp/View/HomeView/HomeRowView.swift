@@ -50,6 +50,16 @@ struct HomeRowView: View {
                 // 区切り線
                 Divider()
             }
+            // 行（セル）がタップされたときの処理
+            .contentShape(Rectangle())
+            .onTapGesture{
+                if homeViewModel.isDeleteMode{
+                    homeViewModel.toggleMemoForDelete(index: index)
+                } else{
+                    homeViewModel.showSheet.toggle()
+                    homeViewModel.editMemo = homeViewModel.memos[index].memo
+                }
+            }
         }
     }
 }

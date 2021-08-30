@@ -29,16 +29,6 @@ struct HomeListView: View {
                 LazyVStack(alignment: .leading) {
                     ForEach(0 ..< homeViewModel.memos.count, id: \.self) { i in
                         HomeRowView(index: i)
-                        // 行（セル）がタップされたときの処理
-                        .contentShape(Rectangle())
-                        .onTapGesture{
-                            if homeViewModel.isDeleteMode{
-                                homeViewModel.toggleMemoForDelete(index: i)
-                            } else{
-                                homeViewModel.showSheet.toggle()
-                                homeViewModel.editMemo = homeViewModel.memos[i].memo
-                            }
-                        }
                     }
                 }
             }
