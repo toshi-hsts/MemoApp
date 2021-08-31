@@ -25,13 +25,7 @@ struct HomeListView: View {
             }
             //　メモがあるときの画面表示
         } else {
-            ScrollView(.vertical) {
-                LazyVStack(alignment: .leading) {
-                    ForEach(0 ..< homeViewModel.memos.count, id: \.self) { i in
-                        HomeRowView(index: i)
-                    }
-                }
-            }
+            HomeRowView()
         }
     }
 }
