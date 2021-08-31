@@ -49,6 +49,7 @@ class HomeViewModel: ObservableObject {
         for i in 0 ..< memos.count {
             memos[i].isSelected = false
         }
+        canDeleteMemos = false
     }
     // メモを削除する
     func deleteMemo() {

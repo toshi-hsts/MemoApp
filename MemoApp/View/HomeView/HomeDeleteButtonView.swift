@@ -20,6 +20,8 @@ struct HomeDeleteButtonView: View {
             homeViewModel.fetchMemos()
             // 削除メモ選択状態を終了する
             homeViewModel.isDeleteMode.toggle()
+            // 初期化
+            homeViewModel.resetSelectedPropery()
         }) {
             ZStack{
                 RoundedRectangle(cornerRadius: 10)
