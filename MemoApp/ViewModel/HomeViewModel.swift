@@ -59,6 +59,12 @@ class HomeViewModel: ObservableObject {
         }
         coreDataModel.save()
     }
+    // 編集メモの初期設定
+    func setEditMemo(index: Int){
+        editMemo = memos[index].memo
+        memoTextEditor = editMemo.content!
+        memoDate = editMemo.date!
+    }
     // editMemoをnilにリセットする
     func resetEditMemo(){
         editMemo = nil

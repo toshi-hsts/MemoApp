@@ -21,11 +21,5 @@ struct AddMemoDateView: View {
             .labelsHidden()
             .frame(maxWidth:.infinity, alignment: .center)
             .padding()
-            .onAppear{
-                // 編集時、テキストエディタに既存日付を代入する
-                if homeViewModel.editMemo != nil {
-                    homeViewModel.memoDate = homeViewModel.editMemo.date!
-                }
-            }
     }
 }

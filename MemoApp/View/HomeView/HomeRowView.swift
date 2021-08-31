@@ -23,25 +23,25 @@ struct HomeRowView: View {
     var body: some View {
         ScrollView(.vertical) {
             LazyVStack(alignment: .leading) {
-                ForEach(0 ..< homeViewModel.memos.count, id: \.self) { index in
+                ForEach(0 ..< homeViewModel.memos.count, id: \.self) { i in
                     VStack(alignment: .leading){
                         HStack{
                             // 削除用のチェックボタンを表示する
                             if homeViewModel.isDeleteMode {
                                 Button(action: {
-                                    homeViewModel.toggleMemoForDelete(index: index)
+                                    homeViewModel.toggleMemoForDelete(index: i)
                                 }) {
-                                    Image(systemName: homeViewModel.memos[index].isSelected ? "checkmark.square.fill" : "square")
+                                    Image(systemName: homeViewModel.memos[i].isSelected ? "checkmark.square.fill" : "square")
                                         .padding(.leading, 10)
                                 }
                             }
                             // メモの内容と日付を表示
                             VStack(alignment: .leading){
-                                Text(homeViewModel.memos[index].memo.content!)
+                                Text(homeViewModel.memos[i].memo.content!)
                                     .lineLimit(2)
                                     .font(.headline)
                                     .padding(5)
-                                Text(itemFormatter.string(from: homeViewModel.memos[index].memo.date!))
+                                Text(itemFormatter.string(from: homeViewModel.memos[i].memo.date!))
                                     .font(.subheadline)
                                     .padding(.horizontal, 5)
                             }
@@ -53,10 +53,10 @@ struct HomeRowView: View {
                     .contentShape(Rectangle())
                     .onTapGesture{
                         if homeViewModel.isDeleteMode{
-                            homeViewModel.toggleMemoForDelete(index: index)
+                            homeViewModel.toggleMemoForDelete(index: i)
                         } else{
                             homeViewModel.showSheet.toggle()
-                            homeViewModel.editMemo = homeViewModel.memos[index].memo
+                            homeViewModel.setEditMemo(index: i)
                         }
                     }
                 }

@@ -19,12 +19,6 @@ struct AddMemoEditorView: View {
     var body: some View {
         // メモ入力欄
         TextEditor(text: $homeViewModel.memoTextEditor)
-            .onAppear{
-                // 編集時、テキストエディタに既存メモを代入する
-                if homeViewModel.editMemo != nil {
-                    homeViewModel.memoTextEditor = homeViewModel.editMemo.content!
-                }
-            }
         // 区切り線
         Divider()
             .padding()
