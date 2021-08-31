@@ -6,7 +6,7 @@
 *本アプリは、[iPhoneアプリ開発集中オンライン講座「CodeCandy」](https://code-candy.com/p/ios)の講座内で出題されている課題に機能追加したアプリです。ソースコードを見る前に、[こちら](https://code-candy.com/courses/ios/lectures/33267857)のご確認をお願いします。*
 
 # 実行画面
-![panelGameDemo](https://user-images.githubusercontent.com/80573353/127998407-e46a45e3-5b2a-4cdd-ac18-c9415aaaa148.GIF)
+![kqmqc-r0h55](https://user-images.githubusercontent.com/80573353/131519914-d3a85c52-8e2c-4a46-b677-f99488661a1d.gif)
 
 # 機能・特徴・推しポイント
 - 超シンプルなメモアプリ（いつ、何をするかだけを記録可能）
