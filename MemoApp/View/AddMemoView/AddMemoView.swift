@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct AddMemoView: View {
-    // HomeViewModelの環境オブジェクト
-    @EnvironmentObject var homeViewModel: HomeViewModel
-    
     var body: some View {
         VStack(alignment: .leading){
             AddMemoHeaderView()
